@@ -62,7 +62,7 @@ export const registConfirm = async (carNum) => {
     const { data: reservationCheck, error: reservation_error } = await supabase
       .from("parking_reservations") //방문예약차량인지확인
       .select("visit_type")
-      .neq("profile_id",16)
+      .neq("profile_id",4)
       .eq("car_num", carNum)
       .maybeSingle(); 
     const reservationstate = reservationCheck ? true : false;
@@ -137,7 +137,7 @@ if(duplicationstat){
 //16번 아이디가 삭제되면 안됩니다.
   const { error: parking_reservations_error } = await supabase.from("parking_reservations").insert([
         {
-            profile_id: 16,
+            profile_id: 4,
             car_num: carNum,
             visit_type: "VISIT",
             start_date: new Date().toISOString(),
@@ -168,7 +168,7 @@ export const exitParking = async (carNum) => {
     .from("parking_reservations")
     .select("*")
     .eq("car_num",carNum)
-    .eq("profile_id",16)
+    .eq("profile_id",4)
     .single(); //한개만 가져와라
 
 
@@ -211,7 +211,7 @@ export const confirmExit = async (spotId,carNum) => {
     .from("parking_reservations")
     .delete()
     .eq("car_num",carNum)
-    .eq("profile_id",16);
+    .eq("profile_id",4);
 
   if (parking_reservations_error) throw new Error(parking_reservations_error);
 };
@@ -222,7 +222,7 @@ export const adjustment = async (carNum) => {
     .from("parking_reservations")
     .select("*")
     .eq("car_num", carNum)
-    .eq("profile_id",16)
+    .eq("profile_id",4)
     .maybeSingle();
   if (error) throw error;
 
